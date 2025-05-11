@@ -1,12 +1,2447 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My First Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventus Card | Freedom Awaits</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        :root {
+            --blue-dark: #1a365d;
+            --blue: #2b6cb0;
+            --blue-light: #4299e1;
+            --blue-lighter: #ebf8ff;
+            --dark: #1a202c;
+            --light: #f8f9fa;
+            --gray: #a0aec0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .headline-modern {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+        
+        .subtitle-elegant {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            letter-spacing: 0.02em;
+        }
+        
+        .body-sophisticated {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 0.01em;
+            line-height: 1.8;
+        }
+        
+        .hidden {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(4, 26, 46, 0.4);
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-logo {
+            font-family: 'Baskerville', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-item {
+            position: relative;
+            cursor: pointer;
+            padding: 8px 0;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Baskerville', serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: rgba(144, 205, 244, 0.8);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        
+        .nav-submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: max-content;
+            padding: 10px 0;
+            background: rgba(4, 26, 46, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-item:hover .nav-submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .submenu-item {
+            padding: 8px 20px;
+            transition: background 0.3s ease;
+            white-space: nowrap;
+            font-family: 'Baskerville', serif;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .submenu-item:hover {
+            background: rgba(66, 153, 225, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, #041830 0%, #0a2d52 50%, #113d6d 100%);
+            overflow: hidden;
+        }
+        
+        /* Fluid Background Elements */
+        .fluid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .fluid-wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(19, 102, 255, 0.1) 0%, rgba(19, 102, 255, 0) 70%);
+            border-radius: 45%;
+            animation: fluid-rotate 25s infinite linear;
+            opacity: 0.3;
+        }
+        
+        .fluid-wave:nth-child(2) {
+            width: 170%;
+            height: 170%;
+            background: radial-gradient(ellipse at center, rgba(83, 168, 252, 0.1) 0%, rgba(83, 168, 252, 0) 70%);
+            animation: fluid-rotate 30s infinite linear reverse;
+            opacity: 0.2;
+        }
+        
+        .fluid-wave:nth-child(3) {
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(ellipse at center, rgba(173, 216, 230, 0.07) 0%, rgba(173, 216, 230, 0) 70%);
+            animation: fluid-rotate 20s infinite linear;
+            opacity: 0.2;
+        }
+        
+        @keyframes fluid-rotate {
+            from {
+                transform: translate(-50%, -50%) rotate(0);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+        
+        .fresh-air {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+        
+        .air-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.35);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+        
+        .air-particle:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            width: 2px;
+            height: 2px;
+            animation: float-air 15s infinite linear;
+            animation-delay: 0s;
+        }
+        
+        .air-particle:nth-child(2) {
+            top: 70%;
+            left: 20%;
+            width: 3px;
+            height: 3px;
+            animation: float-air 18s infinite linear;
+            animation-delay: -2s;
+        }
+        
+        .air-particle:nth-child(3) {
+            top: 40%;
+            left: 70%;
+            width: 2px;
+            height: 2px;
+            animation: float-air 20s infinite linear;
+            animation-delay: -5s;
+        }
+        
+        .air-particle:nth-child(4) {
+            top: 60%;
+            left: 80%;
+            width: 2px;
+            height: 2px;
+            animation: float-air 16s infinite linear;
+            animation-delay: -8s;
+        }
+        
+        .air-particle:nth-child(5) {
+            top: 30%;
+            left: 50%;
+            width: 3px;
+            height: 3px;
+            animation: float-air 22s infinite linear;
+            animation-delay: -12s;
+        }
+        
+        .air-particle:nth-child(6) {
+            top: 80%;
+            left: 30%;
+            width: 2px;
+            height: 2px;
+            animation: float-air 17s infinite linear;
+            animation-delay: -7s;
+        }
+        
+        .air-particle:nth-child(7) {
+            top: 15%;
+            left: 85%;
+            width: 3px;
+            height: 3px;
+            animation: float-air 19s infinite linear;
+            animation-delay: -9s;
+        }
+        
+        .air-stream {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                rgba(173, 216, 230, 0) 0%, 
+                rgba(173, 216, 230, 0.05) 20%, 
+                rgba(173, 216, 230, 0.1) 50%,
+                rgba(173, 216, 230, 0.05) 80%,
+                rgba(173, 216, 230, 0) 100%
+            );
+            opacity: 0.3;
+            transform-origin: left center;
+        }
+        
+        .air-stream:nth-child(8) {
+            top: 25%;
+            left: 0;
+            width: 60%;
+            transform: rotate(5deg);
+            animation: air-stream 15s infinite ease-in-out alternate;
+        }
+        
+        .air-stream:nth-child(9) {
+            top: 45%;
+            left: 10%;
+            width: 70%;
+            transform: rotate(-2deg);
+            animation: air-stream 17s infinite ease-in-out alternate-reverse;
+            animation-delay: -3s;
+        }
+        
+        .air-stream:nth-child(10) {
+            top: 65%;
+            left: 5%;
+            width: 50%;
+            transform: rotate(3deg);
+            animation: air-stream 13s infinite ease-in-out alternate;
+            animation-delay: -7s;
+        }
+        
+        @keyframes float-air {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(100px, -50px);
+            }
+            50% {
+                transform: translate(200px, 0);
+            }
+            75% {
+                transform: translate(300px, 50px);
+            }
+            100% {
+                transform: translate(400px, 0);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes air-stream {
+            0% {
+                opacity: 0;
+                transform: scaleX(0.8) translateY(0);
+            }
+            25% {
+                opacity: 0.3;
+            }
+            75% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0;
+                transform: scaleX(1.2) translateY(10px);
+            }
+        }
+        
+        .ambient-gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 40%, rgba(66, 153, 225, 0.25) 0%, rgba(4, 26, 46, 0) 50%),
+                radial-gradient(ellipse at 80% 60%, rgba(99, 179, 237, 0.25) 0%, rgba(4, 26, 46, 0) 50%);
+            opacity: 0.8;
+        }
+        
+        .ambient-light-1 {
+            position: absolute;
+            width: 1200px;
+            height: 1200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(173, 216, 230, 0.1) 0%, rgba(173, 216, 230, 0) 70%);
+            top: -400px;
+            right: -300px;
+            opacity: 0.7;
+            filter: blur(60px);
+            animation: ambient-pulse 8s infinite alternate ease-in-out;
+        }
+        
+        .ambient-light-2 {
+            position: absolute;
+            width: 1000px;
+            height: 1000px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(104, 178, 255, 0.12) 0%, rgba(104, 178, 255, 0) 70%);
+            bottom: -400px;
+            left: -300px;
+            opacity: 0.7;
+            filter: blur(60px);
+            animation: ambient-pulse 10s infinite alternate-reverse ease-in-out;
+            animation-delay: -4s;
+        }
+        
+        @keyframes ambient-pulse {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.7;
+                transform: scale(1.1);
+            }
+        }
+        
+        /* Header Highlight */
+        .header-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(to bottom, rgba(83, 168, 252, 0.1) 0%, rgba(4, 26, 46, 0) 100%);
+            z-index: 1;
+        }
+        
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
+            opacity: 0.2;
+            mix-blend-mode: overlay;
+        }
+        
+        .hero-content {
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 4.5rem;
+            letter-spacing: 1px;
+            text-align: center;
+            font-family: 'Baskerville', serif;
+        }
+        
+        .card-container {
+            position: relative;
+            perspective: 2000px;
+            margin: 0;
+            transform-style: preserve-3d;
+        }
+        
+        .card {
+            width: 340px;
+            height: 214px;
+            background: linear-gradient(140deg, #2a3a5a 0%, #3b5c8c 40%, #5d89bf 80%, #9ab9db 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(15deg) rotateY(-15deg) translateZ(20px);
+            animation: card3dFloat 8s infinite ease-in-out;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.5),
+                0 10px 25px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            will-change: transform, box-shadow;
+            padding: 20px;
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(210, 220, 240, 0.03) 25%,
+                rgba(210, 220, 240, 0.08) 50%,
+                rgba(210, 220, 240, 0.03) 75%,
+                transparent 100%
+            );
+            z-index: 2;
+            border-radius: 10px;
+        }
+        
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                125deg, 
+                rgba(255, 255, 255, 0.15) 0%, 
+                rgba(255, 255, 255, 0.05) 25%, 
+                rgba(255, 255, 255, 0) 50%
+            );
+            z-index: 5;
+        }
+        
+        .card-reflection {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 300%;
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 20%,
+                rgba(255, 255, 255, 0.1) 25%,
+                rgba(255, 255, 255, 0.15) 30%,
+                rgba(255, 255, 255, 0.1) 35%,
+                rgba(255, 255, 255, 0) 40%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: reflectionSweep 8s infinite ease-in-out;
+            z-index: 4;
+            transform: skewX(-20deg);
+        }
+        
+        @keyframes reflectionSweep {
+            0%, 100% {
+                transform: translateX(-80%) skewX(-20deg);
+            }
+            40%, 60% {
+                transform: translateX(30%) skewX(-20deg);
+            }
+        }
+        
+        /* Subtle metallic texture overlay */
+        .card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
+            opacity: 0.1;
+            z-index: 3;
+            mix-blend-mode: overlay;
+            border-radius: 10px;
+        }
+        
+        .cardholder-name {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.05em;
+            z-index: 10;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        @keyframes card3dFloat {
+            0%, 100% {
+                transform: rotateX(15deg) rotateY(-15deg) translateZ(20px) translateY(0);
+                box-shadow: 
+                    0 30px 60px rgba(0, 0, 0, 0.5),
+                    0 10px 25px rgba(0, 0, 0, 0.3),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
+            }
+            50% {
+                transform: rotateX(20deg) rotateY(-20deg) translateZ(30px) translateY(-15px);
+                box-shadow: 
+                    0 50px 80px rgba(0, 0, 0, 0.5),
+                    0 20px 35px rgba(0, 0, 0, 0.3),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
+            }
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                transparent 0%,
+                rgba(83, 168, 252, 0.02) 45%,
+                rgba(83, 168, 252, 0.05) 50%,
+                rgba(83, 168, 252, 0.02) 55%,
+                transparent 100%
+            );
+            z-index: 15;
+        }
+        
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(140deg, 
+                rgba(255, 255, 255, 0.15) 0%, 
+                rgba(255, 255, 255, 0.05) 50%, 
+                rgba(255, 255, 255, 0) 70%);
+            z-index: 10;
+        }
+        
+        .card-reflection {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 300%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 20%,
+                rgba(255, 255, 255, 0.08) 25%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0.08) 75%,
+                rgba(255, 255, 255, 0) 80%,
+                rgba(255, 255, 255, 0) 100%);
+            animation: reflectionSweep 8s infinite ease-in-out;
+            z-index: 5;
+            transform: skewX(-20deg);
+        }
+        
+        @keyframes reflectionSweep {
+            0%, 100% {
+                transform: translateX(-100%) skewX(-20deg);
+            }
+            40%, 60% {
+                transform: translateX(50%) skewX(-20deg);
+            }
+        }
+        
+        .card-chip {
+            position: absolute;
+            top: 25%;
+            left: 8%;
+            width: 45px;
+            height: 36px;
+            background-color: #e0e0e0;
+            background-image: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 50%, #c0c0c0 100%);
+            border-radius: 5px;
+            z-index: 20;
+            box-shadow: 
+                0 3px 6px rgba(0, 0, 0, 0.2),
+                0 1px 3px rgba(0, 0, 0, 0.1),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            transform: translateZ(5px);
+        }
+        
+        .chip-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, transparent 25%, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.05) 50%, transparent 50%),
+                linear-gradient(180deg, transparent 25%, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.05) 50%, transparent 50%);
+            background-size: 8px 8px;
+        }
+        
+        .chip-line {
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .chip-line:nth-child(1) { top: 25%; }
+        .chip-line:nth-child(2) { top: 45%; }
+        .chip-line:nth-child(3) { top: 65%; }
+        
+        .card-logo {
+            position: absolute;
+            top: 10%;
+            right: 8%;
+            width: 40px;
+            height: 40px;
+            z-index: 20;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+            transform: translateZ(5px);
+        }
+        
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        .scroll-indicator svg {
+            width: 40px;
+            height: 40px;
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.6);
+            stroke-width: 1.5;
+        }
+        
+        /* Tagline Section */
+        .tagline-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--blue-lighter) 0%, var(--light) 50%, var(--blue-lighter) 100%);
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tagline-wrapper {
+            max-width: 1000px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .tagline-pre {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            font-size: 0.85rem;
+            color: #2b6cb0;
+            margin-bottom: 25px;
+            font-weight: 500;
+            opacity: 0.85;
+        }
+        
+        .tagline {
+            font-size: 5.5rem;
+            font-weight: 600;
+            text-align: center;
+            max-width: 1000px;
+            line-height: 1.1;
+            margin-bottom: 45px;
+            color: var(--blue-dark);
+            position: relative;
+            z-index: 10;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.03em;
+        }
+        
+        .tagline-accent {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tagline-accent::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background-color: rgba(66, 153, 225, 0.15);
+            z-index: -1;
+            border-radius: 1px;
+        }
+        
+        .tagline-explanation {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 300;
+            line-height: 1.9;
+            max-width: 650px;
+            margin: 0 auto;
+            color: #466285;
+            letter-spacing: 0.025em;
+        }
+        
+        .tagline-explanation br {
+            display: block;
+            content: "";
+            margin-top: 0.6em;
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 150px 20px;
+            background: linear-gradient(135deg, var(--blue-lighter) 0%, var(--light) 50%, var(--blue-lighter) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .features-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .features-intro {
+            text-align: center;
+            margin-bottom: 120px;
+        }
+        
+        .features-intro h2 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--blue-dark);
+            letter-spacing: 0.25em;
+        }
+        
+        .features-intro p {
+            font-size: 2.2rem;
+            line-height: 1.5;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--blue);
+            letter-spacing: 0.02em;
+        }
+        
+        /* Interactive 3D Marketplace */
+        .marketplace-container {
+            position: relative;
+            min-height: 650px;
+            width: 100%;
+            margin: 0 auto 120px;
+            perspective: 1200px;
+        }
+        
+        .marketplace-3d {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            transform-style: preserve-3d;
+        }
+        
+        /* Card 3D transformations should be fixed in middle */
+        .connector-system {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            transform-style: preserve-3d;
+            z-index: 10;
+        }
+        
+        .card-3d {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(25deg) rotateY(0);
+            transform-style: preserve-3d;
+            z-index: 20;
+            /* Removed transition to keep card fixed */
+        }
+        
+        .card-face {
+            width: 180px;
+            height: 110px;
+            background: linear-gradient(135deg, #2a3a5a 0%, #3b5c8c 40%, #5d89bf 80%, #9ab9db 100%);
+            border-radius: 12px;
+            position: relative;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(3px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-face::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(210, 220, 240, 0.03) 25%,
+                rgba(210, 220, 240, 0.08) 50%,
+                rgba(210, 220, 240, 0.03) 75%,
+                transparent 100%
+            );
+            z-index: 15;
+            border-radius: 12px;
+        }
+        
+        /* Subtle metallic texture overlay */
+        .card-face::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
+            opacity: 0.15;
+            z-index: 12;
+            mix-blend-mode: overlay;
+            border-radius: 12px;
+        }
+        
+        .card-chip {
+            position: absolute;
+            top: 25%;
+            left: 12%;
+            width: 30px;
+            height: 24px;
+            background-color: #e0e0e0;
+            background-image: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 50%, #c0c0c0 100%);
+            border-radius: 4px;
+            z-index: 10;
+            transform: translateZ(2px);
+        }
+        
+        .card-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 40%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0) 60%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            border-radius: 12px;
+            transform: translateZ(1px);
+            animation: cardShine 4s infinite ease-in-out;
+        }
+        
+        /* Airy components around the card */
+        .airy-element {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            filter: blur(2px);
+            transform-style: preserve-3d;
+            z-index: 5;
+        }
+        
+        .airy-element.e1 {
+            width: 80px;
+            height: 80px;
+            top: 15%;
+            left: 5%;
+            animation: floatAir 7s infinite ease-in-out;
+        }
+        
+        .airy-element.e2 {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            right: 10%;
+            animation: floatAir 8s infinite ease-in-out reverse;
+        }
+        
+        .airy-element.e3 {
+            width: 40px;
+            height: 40px;
+            top: 60%;
+            left: 15%;
+            animation: floatAir 6s infinite ease-in-out;
+            animation-delay: 1s;
+        }
+        
+        .airy-element.e4 {
+            width: 50px;
+            height: 50px;
+            top: 30%;
+            right: 5%;
+            animation: floatAir 9s infinite ease-in-out reverse;
+            animation-delay: 2s;
+        }
+        
+        .airy-trail {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                rgba(173, 216, 230, 0) 0%,
+                rgba(173, 216, 230, 0.1) 20%,
+                rgba(173, 216, 230, 0.3) 50%,
+                rgba(173, 216, 230, 0.1) 80%,
+                rgba(173, 216, 230, 0) 100%
+            );
+            opacity: 0;
+            z-index: 4;
+        }
+        
+        .airy-trail.t1 {
+            width: 100px;
+            top: 30%;
+            left: 30%;
+            transform: rotate(15deg);
+        }
+        
+        .airy-trail.t2 {
+            width: 80px;
+            bottom: 40%;
+            right: 35%;
+            transform: rotate(-20deg);
+        }
+        
+        .airy-trail.t3 {
+            width: 120px;
+            top: 60%;
+            left: 25%;
+            transform: rotate(-5deg);
+        }
+        
+        .airy-trail.t4 {
+            width: 70px;
+            top: 45%;
+            right: 20%;
+            transform: rotate(10deg);
+        }
+        
+        @keyframes floatAir {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translate(10px, -15px) scale(1.1);
+                opacity: 0.8;
+            }
+        }
+        
+        /* Improved card shine animation */
+        @keyframes cardShine {
+            0%, 100% { opacity: 0; transform: translateX(-120px) translateZ(1px); }
+            30% { opacity: 0; }
+            50% { opacity: 1; }
+            70% { opacity: 0; }
+        }
+        
+        /* Micro texture for card */
+        .card-texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CiAgPHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBmaWxsPSJub25lIi8+CiAgPHBhdGggZD0iTTAgMGgyMHYyMEgwVjB6IiBmaWxsPSJub25lIi8+CiAgPHBhdGggZD0iTTEgMWgxdjFoLTFWMXoiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMikiLz4KPC9zdmc+');
+            opacity: 0.4;
+            z-index: 1;
+            border-radius: 12px;
+            mix-blend-mode: overlay;
+        }
+        
+        /* Energy Connection Flows */
+        .flow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            transform-style: preserve-3d;
+        }
+        
+        .flow-path {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                rgba(66, 153, 225, 0) 0%,
+                rgba(66, 153, 225, 0.1) 10%,
+                rgba(66, 153, 225, 0.3) 50%,
+                rgba(66, 153, 225, 0.1) 90%,
+                rgba(66, 153, 225, 0) 100%
+            );
+            opacity: 0;
+            transform-origin: center;
+            z-index: 1;
+        }
+        
+        .flow-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(66, 153, 225, 0.8);
+            box-shadow: 0 0 8px rgba(66, 153, 225, 0.8);
+            filter: blur(1px);
+            z-index: 2;
+            opacity: 0;
+        }
+        
+        .flow-path.left {
+            top: 50%;
+            left: 10%;
+            width: 30%;
+            transform: translateY(-50%) perspective(500px) rotateY(10deg);
+        }
+        
+        .flow-path.right {
+            top: 50%;
+            right: 10%; 
+            width: 30%;
+            transform: translateY(-50%) perspective(500px) rotateY(-10deg);
+        }
+        
+        .flow-particle.left {
+            top: calc(50% - 3px);
+            left: 10%;
+        }
+        
+        .flow-particle.right {
+            top: calc(50% - 3px);
+            right: 10%;
+        }
+        
+        /* Data Node Visualization */
+        .data-node {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(66, 153, 225, 0.05);
+            box-shadow: 0 0 20px rgba(66, 153, 225, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            backdrop-filter: blur(5px);
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+        
+        .data-node::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(66, 153, 225, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(66, 153, 225, 0.6);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .data-node.n1 { top: 30%; left: 35%; animation-delay: 0.2s; }
+        .data-node.n2 { top: 65%; left: 40%; animation-delay: 0.5s; }
+        .data-node.n3 { top: 35%; left: 65%; animation-delay: 0.8s; }
+        .data-node.n4 { top: 60%; left: 60%; animation-delay: 1.1s; }
+        
+        /* Enhanced entity boxes with depth */
+        .marketplace-entity {
+            position: absolute;
+            top: 50%;
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(66, 153, 225, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: white;
+            background-image: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.3) 0%, 
+                rgba(240, 240, 240, 0.3) 100%);
+            color: var(--blue-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            transform-style: preserve-3d;
+        }
+        
+        .merchants-entity {
+            left: 5%;
+            transform: translateY(-50%) rotateY(10deg);
+        }
+        
+        .customers-entity {
+            right: 5%;
+            transform: translateY(-50%) rotateY(-10deg);
+        }
+        
+        .marketplace-entity.active {
+            transform: translateY(-60%) rotateY(0deg) scale(1.05);
+            box-shadow: 
+                0 20px 50px rgba(66, 153, 225, 0.15),
+                0 0 0 1px rgba(66, 153, 225, 0.2),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+        
+        .marketplace-entity:hover {
+            transform: translateY(-55%) rotateY(0deg) scale(1.02);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(66, 153, 225, 0.2),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+        
+        .entity-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 2px 3px rgba(66, 153, 225, 0.2));
+        }
+        
+        .entity-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--blue-dark) 30%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+        
+        .entity-desc {
+            font-size: 0.9rem;
+            text-align: center;
+            color: #4a5568;
+            letter-spacing: 0.01em;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .wind-particle {
+            position: absolute;
+            background: linear-gradient(90deg, 
+                rgba(173, 216, 230, 0) 0%, 
+                rgba(173, 216, 230, 0.2) 50%,
+                rgba(173, 216, 230, 0) 100%
+            );
+            height: 1px;
+            opacity: 0;
+            transform-origin: left center;
+            border-radius: 0;
+        }
+        
+        /* Content panels that slide in when entity is clicked */
+        .panel-container {
+            position: relative;
+            width: 100%;
+            margin-top: 40px;
+            min-height: 300px;
+        }
+        
+        .benefit-panel {
+            position: absolute;
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 5;
+        }
+        
+        .benefit-panel.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .panel-merchant .panel-header {
+            color: var(--blue-dark);
+        }
+        
+        .panel-customer .panel-header {
+            color: var(--blue);
+        }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 20px;
+        }
+        
+        .panel-title {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .panel-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .panel-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .benefit-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .benefit-item {
+            background: rgba(235, 248, 255, 0.6);
+            border-radius: 10px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .benefit-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue) 100%);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .benefit-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--blue-dark);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .benefit-desc {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #4a5568;
+        }
+        
+        .panel-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: flex-end;
+        }
+        
+        .feature-row {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 150px;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .feature-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .feature-row::after {
+            content: '';
+            position: absolute;
+            bottom: -75px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 1px;
+            background-color: var(--blue-light);
+            opacity: 0.5;
+        }
+        
+        .feature-row:last-child::after {
+            display: none;
+        }
+        
+        .feature-content {
+            max-width: 700px;
+            padding-right: 0;
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 20px rgba(43, 108, 176, 0.2);
+            font-size: 1.8rem;
+        }
+        
+        .feature-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--blue-dark);
+            font-family: 'Baskerville', serif;
+            letter-spacing: 0.5px;
+        }
+        
+        .feature-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #3a5374;
+            margin-bottom: 30px;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        
+        .how-it-works-btn {
+            display: inline-block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--blue-dark);
+            border: 1px solid var(--blue-dark);
+            background-color: transparent;
+            border-radius: 2px;
+            padding: 12px 30px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .how-it-works-btn:hover {
+            background-color: var(--blue-dark);
+            color: white;
+        }
+        
+        .how-it-works-btn span {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        
+        .how-it-works-btn:hover span {
+            transform: translateX(5px);
+        }
+        
+        @media (max-width: 768px) {
+            .benefit-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .marketplace-entity {
+                width: 150px;
+                height: 150px;
+                padding: 15px;
+            }
+            
+            .marketplace-card {
+                width: 180px;
+                height: 180px;
+                font-size: 1.4rem;
+            }
+            
+            .marketplace-connection {
+                width: 25%;
+            }
+            
+            .benefit-panel {
+                padding: 30px 20px;
+            }
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 20px;
+            background: linear-gradient(135deg, var(--blue-lighter) 0%, var(--light) 50%, var(--blue-lighter) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--blue-dark);
+            font-family: 'Baskerville', serif;
+        }
+        
+        .cta-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            color: #3a5374;
+            line-height: 1.6;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.3px;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 16px 40px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 25px rgba(26, 54, 93, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(26, 54, 93, 0.4);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            background-color: var(--blue-dark);
+            color: white;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-family: 'Baskerville', serif;
+            background: linear-gradient(90deg, var(--blue-light) 0%, white 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .footer-link {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.3px;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        .footer-text {
+            color: var(--gray);
+            font-size: 0.9rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .feature-row {
+                margin-bottom: 80px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .tagline {
+                font-size: 2.5rem;
+            }
+            
+            .feature-title {
+                font-size: 2rem;
+            }
+            
+            .cta-title {
+                font-size: 2.5rem;
+            }
+            
+            .card {
+                width: 280px;
+                height: 177px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Welcome to My Website</h1>
-  <p>This site was created with Visual Studio Code.</p>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-logo">Ventus Card</div>
+        <div class="nav-links">
+            <div class="nav-item">What We Offer
+                <div class="nav-submenu">
+                    <div class="submenu-item">Customers</div>
+                    <div class="submenu-item">Merchants</div>
+                </div>
+            </div>
+            <div class="nav-item">Get in Touch</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="header-glow"></div>
+        <div class="ambient-gradient"></div>
+        <div class="ambient-light-1"></div>
+        <div class="ambient-light-2"></div>
+        <div class="noise-overlay"></div>
+        <div class="fluid-bg">
+            <div class="fluid-wave"></div>
+            <div class="fluid-wave"></div>
+            <div class="fluid-wave"></div>
+        </div>
+        <div class="fresh-air">
+            <div class="air-particle"></div>
+            <div class="air-particle"></div>
+            <div class="air-particle"></div>
+            <div class="air-particle"></div>
+            <div class="air-particle"></div>
+            <div class="air-particle"></div>
+            <div class="air-particle"></div>
+            <div class="air-stream"></div>
+            <div class="air-stream"></div>
+            <div class="air-stream"></div>
+            
+            <!-- Additional wind particles -->
+            <div class="air-particle" style="top: 10%; left: 15%; width: 3px; height: 3px;"></div>
+            <div class="air-particle" style="top: 35%; left: 75%; width: 2px; height: 2px;"></div>
+            <div class="air-particle" style="top: 65%; left: 65%; width: 4px; height: 4px;"></div>
+            <div class="air-particle" style="top: 82%; left: 25%; width: 3px; height: 3px;"></div>
+            <div class="air-particle" style="top: 55%; left: 45%; width: 2px; height: 2px;"></div>
+            <div class="air-stream" style="top: 15%; left: 20%; width: 40%; height: 3px;"></div>
+            <div class="air-stream" style="top: 75%; left: 30%; width: 60%; height: 2px;"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Ventus Card</h1>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-overlay"></div>
+                    <div class="card-reflection"></div>
+                    <div class="card-chip">
+                        <div class="chip-grid"></div>
+                        <div class="chip-line"></div>
+                        <div class="chip-line"></div>
+                        <div class="chip-line"></div>
+                    </div>
+                    <div class="card-logo">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 5L35 20L20 35L5 20L20 5Z" stroke="white" stroke-width="1.5" fill="none"/>
+                            <path d="M20 15V25" stroke="white" stroke-width="1.5" fill="none"/>
+                            <path d="M15 20H25" stroke="white" stroke-width="1.5" fill="none"/>
+                        </svg>
+                    </div>
+                    <div class="cardholder-name">
+                        <span>John Doe</span>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Tagline Section -->
+    <section class="tagline-section">
+        <div class="tagline-wrapper hidden">
+            <div class="tagline-pre">INTRODUCING VENTUS</div>
+            <h2 class="tagline"><span class="tagline-accent">Rewards, Unleashed</span></h2>
+            <p class="tagline-explanation">Earn 5x points on what matters to you, not predefined categories.<br>Your goals become our reward structure, evolving with your lifestyle.</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <div class="features-intro hidden">
+                <h2 class="headline-modern">UNPARALLELED BENEFIT ECOSYSTEM</h2>
+                <p class="subtitle-elegant">Where personalized rewards meet cross-category freedom</p>
+            </div>
+            
+            <!-- Interactive 3D Marketplace Visualization -->
+            <div class="marketplace-container hidden">
+                <div class="marketplace-3d">
+                    <!-- Merchants Side -->
+                    <div class="marketplace-entity merchants-entity" id="merchantsEntity">
+                        <div class="entity-icon">💼</div>
+                        <h4 class="entity-title">For Partners</h4>
+                        <p class="entity-desc">Precision targeting & AI insights</p>
+                    </div>
+                    
+                    <!-- Sophisticated 3D Connector System -->
+                    <div class="connector-system">
+                        <!-- 3D Card in Center -->
+                        <div class="card-3d">
+                        <div class="card-face">
+                                <div class="card-texture"></div>
+                                <div class="card-chip"></div>
+                                <div class="card-shine"></div>
+                            </div>
+                            
+                            <!-- Airy elements around the card -->
+                            <div class="airy-element e1"></div>
+                            <div class="airy-element e2"></div>
+                            <div class="airy-element e3"></div>
+                            <div class="airy-element e4"></div>
+                            
+                            <!-- Airy trails -->
+                            <div class="airy-trail t1"></div>
+                            <div class="airy-trail t2"></div>
+                            <div class="airy-trail t3"></div>
+                            <div class="airy-trail t4"></div>
+                        </div>
+                        
+                        <!-- Energy Connection Flow System -->
+                        <div class="flow-container">
+                            <div class="flow-path left"></div>
+                            <div class="flow-path right"></div>
+                            <div class="flow-particle left"></div>
+                            <div class="flow-particle right"></div>
+                        </div>
+                        
+                        <!-- Data Node Visualization -->
+                        <div class="data-node n1"></div>
+                        <div class="data-node n2"></div>
+                        <div class="data-node n3"></div>
+                        <div class="data-node n4"></div>
+                    </div>
+                    
+                    <!-- Customers Side -->
+                    <div class="marketplace-entity customers-entity" id="customersEntity">
+                        <div class="entity-icon">👤</div>
+                        <h4 class="entity-title">For Members</h4>
+                        <p class="entity-desc">Curated rewards & AI advantage</p>
+                    </div>
+                    
+                    <!-- Wind Animation Elements -->
+                    <div class="wind-particle" style="top: 30%; left: 20%; width: 80px;"></div>
+                    <div class="wind-particle" style="top: 45%; left: 30%; width: 120px;"></div>
+                    <div class="wind-particle" style="top: 55%; left: 40%; width: 100px;"></div>
+                    <div class="wind-particle" style="top: 35%; left: 60%; width: 130px;"></div>
+                    <div class="wind-particle" style="top: 65%; left: 50%; width: 90px;"></div>
+                    <div class="wind-particle" style="top: 25%; left: 35%; width: 110px;"></div>
+                    <div class="wind-particle" style="top: 70%; left: 65%; width: 100px;"></div>
+                </div>
+                
+                <!-- Interactive Panels -->
+                <div class="panel-container">
+                    <!-- Merchant Benefits Panel -->
+                    <div class="benefit-panel panel-merchant" id="merchantPanel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">PARTNER ADVANTAGES</h3>
+                            <div class="panel-close" id="closeMerchantPanel">✕</div>
+                        </div>
+                        <div class="benefit-list">
+                            <div class="benefit-item">
+                                <div class="benefit-icon">🎯</div>
+                                <h4 class="benefit-title">PRECISION TARGETING</h4>
+                                <p class="benefit-desc">Connect with high-intent customers at their peak spending moments through our reward engine.</p>
+                                <a href="#" class="how-it-works-btn" data-link="merchant1">Learn more <span>→</span></a>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">⚙️</div>
+                                <h4 class="benefit-title">AI ANALYTICS SUITE</h4>
+                                <p class="benefit-desc">Unlock behavioral insights and trend forecasting to optimize campaigns in real-time.</p>
+                                <a href="#" class="how-it-works-btn" data-link="merchant2">Learn more <span>→</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Customer Benefits Panel -->
+                    <div class="benefit-panel panel-customer" id="customerPanel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">MEMBER EXPERIENCES</h3>
+                            <div class="panel-close" id="closeCustomerPanel">✕</div>
+                        </div>
+                        <div class="benefit-list">
+                            <div class="benefit-item">
+                                <div class="benefit-icon">🔄</div>
+                                <h4 class="benefit-title">PERSONALIZED REWARDS</h4>
+                                <p class="benefit-desc">5x points on what matters to you. Your goals, our priority—category limitations dissolved.</p>
+                                <a href="#" class="how-it-works-btn" data-link="customer1">Learn more <span>→</span></a>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">🧠</div>
+                                <h4 class="benefit-title">CROSS-CATEGORY AI</h4>
+                                <p class="benefit-desc">Your digital edge for securing drops, deals, and rare finds before they hit mainstream.</p>
+                                <a href="#" class="how-it-works-btn" data-link="customer2">Learn more <span>→</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="cta-title hidden">Elevate Your Financial Journey</h2>
+        <p class="cta-subtitle hidden">Be among the first to experience the next evolution in personalized rewards. No annual fee. No compromise.</p>
+        <button class="cta-button hidden">Join the Waitlist</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">Ventus Card</div>
+        <div class="footer-links">
+            <a href="#" class="footer-link">About</a>
+            <a href="#" class="footer-link">Contact</a>
+            <a href="#" class="footer-link">Terms</a>
+            <a href="#" class="footer-link">Privacy</a>
+        </div>
+        <p class="footer-text">© 2025 Ventus Financial. All rights reserved. Banking services provided by Member FDIC institutions. The Ventus Card is issued by partner banks.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements fade in on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // If this is the marketplace container, animate the wind particles
+                        if (entry.target.classList.contains('marketplace-container')) {
+                            animateWindParticles();
+                            animateConnectorSystem();
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.hidden').forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Smooth scroll for arrow
+            document.querySelector('.scroll-indicator').addEventListener('click', function() {
+                window.scrollTo({
+                    top: window.innerHeight,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 3D Marketplace Interaction
+            const merchantsEntity = document.getElementById('merchantsEntity');
+            const customersEntity = document.getElementById('customersEntity');
+            const merchantPanel = document.getElementById('merchantPanel');
+            const customerPanel = document.getElementById('customerPanel');
+            const closeMerchantPanel = document.getElementById('closeMerchantPanel');
+            const closeCustomerPanel = document.getElementById('closeCustomerPanel');
+            
+            // Click handlers for entities
+            merchantsEntity.addEventListener('click', function() {
+                merchantPanel.classList.add('active');
+                customerPanel.classList.remove('active');
+                
+                // Add active state to this entity and remove from other
+                merchantsEntity.classList.add('active');
+                customersEntity.classList.remove('active');
+                
+                // Intensify left flow particles
+                intensifyFlow('left');
+            });
+            
+            customersEntity.addEventListener('click', function() {
+                customerPanel.classList.add('active');
+                merchantPanel.classList.remove('active');
+                
+                // Add active state to this entity and remove from other
+                customersEntity.classList.add('active');
+                merchantsEntity.classList.remove('active');
+                
+                // Intensify right flow particles
+                intensifyFlow('right');
+            });
+            
+            // Close panel buttons
+            closeMerchantPanel.addEventListener('click', function() {
+                merchantPanel.classList.remove('active');
+                merchantsEntity.classList.remove('active');
+                normalizeFlows();
+            });
+            
+            closeCustomerPanel.addEventListener('click', function() {
+                customerPanel.classList.remove('active');
+                customersEntity.classList.remove('active');
+                normalizeFlows();
+            });
+            
+            // Intensify data flow in the specified direction
+            function intensifyFlow(direction) {
+                // Slow down the other direction
+                const otherDirection = direction === 'left' ? 'right' : 'left';
+                
+                anime.remove(`.flow-particle.${direction}`);
+                anime.remove(`.flow-particle.${otherDirection}`);
+                
+                // Intensify the selected flow
+                anime({
+                    targets: `.flow-particle.${direction}`,
+                    translateX: direction === 'left' ? 
+                        [0, document.querySelector(`.flow-path.${direction}`).offsetWidth] : 
+                        [0, -document.querySelector(`.flow-path.${direction}`).offsetWidth],
+                    opacity: [0, 1, 0],
+                    duration: 1200, // Faster
+                    delay: 0,
+                    easing: 'easeInOutSine',
+                    loop: true
+                });
+                
+                // Slow down the other flow
+                anime({
+                    targets: `.flow-particle.${otherDirection}`,
+                    translateX: otherDirection === 'left' ? 
+                        [0, document.querySelector(`.flow-path.${otherDirection}`).offsetWidth] : 
+                        [0, -document.querySelector(`.flow-path.${otherDirection}`).offsetWidth],
+                    opacity: [0, 0.5, 0],
+                    duration: 3000, // Slower
+                    delay: 1000,
+                    easing: 'easeInOutSine',
+                    loop: true
+                });
+                
+                // Make the data nodes on the active side pulse more intensely
+                const activeNodes = direction === 'left' ? ['.data-node.n1', '.data-node.n2'] : ['.data-node.n3', '.data-node.n4'];
+                
+                activeNodes.forEach(node => {
+                    anime.remove(node);
+                    anime({
+                        targets: node,
+                        scale: [1, 1.3, 1],
+                        opacity: [0.7, 1, 0.7],
+                        translateY: [0, -8, 0],
+                        duration: 1800,
+                        easing: 'easeInOutSine',
+                        loop: true
+                    });
+                });
+                
+                // Also intensify airy elements on that side
+                const sideSelector = direction === 'left' ? ['.airy-element.e1', '.airy-element.e3'] : ['.airy-element.e2', '.airy-element.e4'];
+                
+                sideSelector.forEach(element => {
+                    anime.remove(element);
+                    anime({
+                        targets: element,
+                        scale: [1, 1.4, 1],
+                        opacity: [0.6, 0.9, 0.6],
+                        translateY: [0, -15, 0],
+                        translateX: direction === 'left' ? [0, -10, 0] : [0, 10, 0],
+                        duration: 2000,
+                        easing: 'easeInOutQuad',
+                        loop: true
+                    });
+                });
+                
+                // Intensify airy trails
+                const trailSelector = direction === 'left' ? ['.airy-trail.t1', '.airy-trail.t3'] : ['.airy-trail.t2', '.airy-trail.t4'];
+                
+                trailSelector.forEach(trail => {
+                    anime.remove(trail);
+                    anime({
+                        targets: trail,
+                        width: [0, '100%'],
+                        opacity: [0, 0.7, 0],
+                        translateX: direction === 'left' ? [0, 30] : [0, -30],
+                        easing: 'easeInOutSine',
+                        duration: 1500,
+                        loop: true
+                    });
+                });
+            }
+            
+            // Reset flows to normal state
+            function normalizeFlows() {
+                anime.remove('.flow-particle.left');
+                anime.remove('.flow-particle.right');
+                anime.remove('.data-node');
+                anime.remove('.airy-element');
+                anime.remove('.airy-trail');
+                
+                // Reset left flow
+                anime({
+                    targets: '.flow-particle.left',
+                    translateX: [0, document.querySelector('.flow-path.left').offsetWidth],
+                    opacity: [0, 1, 0],
+                    duration: 2000,
+                    delay: 500,
+                    easing: 'easeInOutSine',
+                    loop: true
+                });
+                
+                // Reset right flow
+                anime({
+                    targets: '.flow-particle.right',
+                    translateX: [0, -document.querySelector('.flow-path.right').offsetWidth],
+                    opacity: [0, 1, 0],
+                    duration: 2000,
+                    delay: 1000,
+                    easing: 'easeInOutSine',
+                    loop: true
+                });
+                
+                // Reset data nodes
+                document.querySelectorAll('.data-node').forEach((node, i) => {
+                    anime({
+                        targets: node,
+                        scale: [1, 1.1, 1],
+                        opacity: [0.7, 1, 0.7],
+                        translateY: [0, -5, 0],
+                        duration: 3000,
+                        delay: i * 200,
+                        easing: 'easeInOutSine',
+                        loop: true
+                    });
+                });
+                
+                // Reset airy elements
+                document.querySelectorAll('.airy-element').forEach((element, i) => {
+                    anime({
+                        targets: element,
+                        scale: [1, 1.1, 1],
+                        opacity: [0.6, 0.8, 0.6],
+                        translateY: [0, -10, 0],
+                        duration: 4000 + i * 1000,
+                        easing: 'easeInOutQuad',
+                        loop: true
+                    });
+                });
+                
+                // Subtle airy trails
+                document.querySelectorAll('.airy-trail').forEach((trail, i) => {
+                    anime({
+                        targets: trail,
+                        width: [0, '100%'],
+                        opacity: [0, 0.3, 0],
+                        easing: 'easeInOutSine',
+                        duration: 3000,
+                        delay: i * 500,
+                        loop: true,
+                        direction: 'alternate'
+                    });
+                });
+            }
+            
+            // Linking buttons to dropdown menu items
+            document.querySelectorAll('.how-it-works-btn[data-link]').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const linkType = this.getAttribute('data-link');
+                    
+                    // Determine which submenu item to click based on data-link attribute
+                    if (linkType.startsWith('merchant')) {
+                        // Find and click the Merchants dropdown item
+                        const merchantsSubmenuItems = document.querySelectorAll('.nav-submenu .submenu-item');
+                        merchantsSubmenuItems[0].click();
+                    } else if (linkType.startsWith('customer')) {
+                        // Find and click the Customers dropdown item
+                        const customersSubmenuItems = document.querySelectorAll('.nav-submenu .submenu-item');
+                        customersSubmenuItems[1].click();
+                    }
+                });
+            });
+            
+            // Enhanced 3D Animation for connector system
+            const marketplace3d = document.querySelector('.marketplace-3d');
+            const card3d = document.querySelector('.card-3d'); // Keep this declaration
+            
+            // Mouse move effect on the 3D environment - REMOVING CARD MOVEMENT
+            marketplace3d.addEventListener('mousemove', function(e) {
+                const rect = marketplace3d.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Calculate percentage position
+                const xPercent = (x / rect.width - 0.5) * 2; // -1 to 1
+                const yPercent = (y / rect.height - 0.5) * 2; // -1 to 1
+                
+                // DO NOT MOVE THE CARD - removed card movement
+                
+                // Adjust entity positions slightly based on mouse
+                if (!merchantsEntity.classList.contains('active')) {
+                    merchantsEntity.style.transform = `translateY(-50%) rotateY(${10 + xPercent * 5}deg)`;
+                }
+                
+                if (!customersEntity.classList.contains('active')) {
+                    customersEntity.style.transform = `translateY(-50%) rotateY(${-10 + xPercent * 5}deg)`;
+                }
+                
+                // Move data nodes slightly
+                document.querySelectorAll('.data-node').forEach(node => {
+                    const nodeX = parseFloat(node.style.left || 0);
+                    const nodeY = parseFloat(node.style.top || 0);
+                    
+                    node.style.transform = `translate(${xPercent * 5}px, ${yPercent * 5}px)`;
+                });
+                
+                // Move airy elements with mouse
+                document.querySelectorAll('.airy-element').forEach((element, i) => {
+                    const multiplier = [0.8, 1.2, 1.0, 0.9][i];
+                    element.style.transform = `translate(${xPercent * 10 * multiplier}px, ${yPercent * 10 * multiplier}px)`;
+                });
+            });
+            
+            // Reset transforms when mouse leaves
+            marketplace3d.addEventListener('mouseleave', function() {
+                // DO NOT RESET CARD POSITION - but keep reference
+                
+                if (!merchantsEntity.classList.contains('active')) {
+                    merchantsEntity.style.transform = 'translateY(-50%) rotateY(10deg)';
+                }
+                
+                if (!customersEntity.classList.contains('active')) {
+                    customersEntity.style.transform = 'translateY(-50%) rotateY(-10deg)';
+                }
+                
+                document.querySelectorAll('.data-node').forEach(node => {
+                    node.style.transform = 'translate(0px, 0px)';
+                });
+                
+                document.querySelectorAll('.airy-element').forEach(element => {
+                    element.style.transform = 'translate(0px, 0px)';
+                });
+            });
+            
+            // Advanced animation for the connector system
+            function animateConnectorSystem() {
+                // Animate flow paths
+                anime({
+                    targets: '.flow-path',
+                    opacity: [0, 0.7],
+                    duration: 1000,
+                    easing: 'easeInOutQuad'
+                });
+                
+                // Animate data flow particles from left to right
+                anime({
+                    targets: '.flow-particle.left',
+                    translateX: [0, document.querySelector('.flow-path.left').offsetWidth],
+                    opacity: [0, 1, 0],
+                    duration: 2000,
+                    delay: 500,
+                    easing: 'easeInOutSine',
+                    loop: true
+                });
+                
+                // Animate data flow particles from right to left
+                anime({
+                    targets: '.flow-particle.right',
+                    translateX: [0, -document.querySelector('.flow-path.right').offsetWidth],
+                    opacity: [0, 1, 0],
+                    duration: 2000,
+                    delay: 1000,
+                    easing: 'easeInOutSine',
+                    loop: true
+                });
+                
+                // Animate data nodes pulsing and floating
+                document.querySelectorAll('.data-node').forEach((node, i) => {
+                    anime({
+                        targets: node,
+                        scale: [1, 1.1, 1],
+                        opacity: [0.7, 1, 0.7],
+                        translateY: [0, -5, 0],
+                        duration: 3000,
+                        delay: i * 200,
+                        easing: 'easeInOutSine',
+                        loop: true
+                    });
+                });
+                
+                // Animate airy elements
+                document.querySelectorAll('.airy-element').forEach((element, i) => {
+                    anime({
+                        targets: element,
+                        scale: [1, 1.1, 1],
+                        opacity: [0.6, 0.8, 0.6],
+                        translateY: [0, -10, 0],
+                        duration: 4000 + i * 1000,
+                        easing: 'easeInOutQuad',
+                        loop: true
+                    });
+                });
+                
+                // Animate airy trails
+                document.querySelectorAll('.airy-trail').forEach((trail, i) => {
+                    anime({
+                        targets: trail,
+                        width: [0, '100%'],
+                        opacity: [0, 0.3, 0],
+                        easing: 'easeInOutSine',
+                        duration: 3000,
+                        delay: i * 500,
+                        loop: true,
+                        direction: 'alternate'
+                    });
+                });
+                
+                // Card floating animation - REMOVING to keep card fixed
+                // Animation for airy elements instead
+                anime({
+                    targets: '.airy-element',
+                    translateY: function(el, i) {
+                        const amplitude = [5, 7, 4, 6][i]; // Different amplitudes
+                        return [`-${amplitude}px`, `${amplitude}px`];
+                    },
+                    scale: function(el, i) {
+                        return [1, 1 + (i % 3) * 0.05 + 0.05]; // Different scale factors
+                    },
+                    opacity: function(el, i) {
+                        return [0.6, 0.7 + (i % 3) * 0.1]; // Different opacities
+                    },
+                    easing: 'easeInOutSine',
+                    duration: function(el, i) {
+                        return 4000 + i * 1000; // Different durations
+                    },
+                    delay: function(el, i) {
+                        return i * 400; // Staggered starts
+                    },
+                    loop: true,
+                    direction: 'alternate'
+                });
+            }
+            
+            // Wind Animation Effect - Enhanced version with more particles
+            function animateWindParticles() {
+                const windParticles = document.querySelectorAll('.wind-particle');
+                const heroWindParticles = document.querySelectorAll('.fresh-air .air-particle');
+                
+                // Animate marketplace wind particles
+                windParticles.forEach((particle, index) => {
+                    // Randomize animation properties for each particle
+                    const duration = 3 + Math.random() * 4; // 3-7 seconds
+                    const delay = index * 0.5; // Staggered starts
+                    const opacity = 0.1 + Math.random() * 0.2; // Random opacity
+                    const height = 1 + Math.random() * 2; // Random height between 1-3px
+                    
+                    // Set CSS properties
+                    particle.style.opacity = opacity;
+                    particle.style.height = `${height}px`;
+                    
+                    // Animate the particle
+                    anime({
+                        targets: particle,
+                        translateX: [
+                            { value: -50, duration: 0 },
+                            { value: window.innerWidth, duration: duration * 1000 }
+                        ],
+                        translateY: [
+                            { value: 0, duration: 0 },
+                            { value: -10 + Math.random() * 20, duration: duration * 500 },
+                            { value: 10 + Math.random() * -20, duration: duration * 500 }
+                        ],
+                        easing: 'easeInOutSine',
+                        opacity: [
+                            { value: 0, duration: 0 },
+                            { value: opacity, duration: duration * 200 },
+                            { value: opacity, duration: duration * 600 },
+                            { value: 0, duration: duration * 200 }
+                        ],
+                        delay: delay * 1000,
+                        complete: function() {
+                            // Reset and repeat animation
+                            setTimeout(() => {
+                                animateParticle(particle, index);
+                            }, Math.random() * 2000);
+                        }
+                    });
+                });
+                
+                // Enhance hero section wind particles
+                heroWindParticles.forEach((particle, index) => {
+                    const duration = 10 + Math.random() * 15; // 10-25 seconds for more visible particles
+                    const delay = index * 0.8; 
+                    
+                    anime({
+                        targets: particle,
+                        translateX: [
+                            { value: 0, duration: 0 },
+                            { value: window.innerWidth, duration: duration * 1000 }
+                        ],
+                        translateY: [
+                            { value: 0, duration: 0 },
+                            { value: -20 + Math.random() * 40, duration: duration * 1000 }
+                        ],
+                        opacity: [0.2, 0.7, 0.2],
+                        easing: 'easeInOutSine',
+                        delay: delay * 1000,
+                        loop: true
+                    });
+                });
+                
+                // Function to animate a single particle
+                function animateParticle(particle, index) {
+                    const duration = 3 + Math.random() * 4;
+                    const opacity = 0.1 + Math.random() * 0.2;
+                    const height = 1 + Math.random() * 2;
+                    
+                    particle.style.opacity = 0;
+                    particle.style.height = `${height}px`;
+                    particle.style.transform = 'translateX(-50px)';
+                    
+                    anime({
+                        targets: particle,
+                        translateX: [
+                            { value: -50, duration: 0 },
+                            { value: window.innerWidth, duration: duration * 1000 }
+                        ],
+                        translateY: [
+                            { value: 0, duration: 0 },
+                            { value: -10 + Math.random() * 20, duration: duration * 500 },
+                            { value: 10 + Math.random() * -20, duration: duration * 500 }
+                        ],
+                        easing: 'easeInOutSine',
+                        opacity: [
+                            { value: 0, duration: 0 },
+                            { value: opacity, duration: duration * 200 },
+                            { value: opacity, duration: duration * 600 },
+                            { value: 0, duration: duration * 200 }
+                        ],
+                        complete: function() {
+                            // Reset and repeat animation
+                            setTimeout(() => {
+                                animateParticle(particle, index);
+                            }, Math.random() * 2000);
+                        }
+                    });
+                }
+                
+                // Animate air streams in hero section
+                document.querySelectorAll('.fresh-air .air-stream').forEach((stream, index) => {
+                    anime({
+                        targets: stream,
+                        opacity: [0, 0.3, 0],
+                        translateX: [0, window.innerWidth * 0.3],
+                        translateY: [-5, 5],
+                        duration: 15000,
+                        delay: index * 2000,
+                        easing: 'easeInOutSine',
+                        loop: true
+                    });
+                });
+            }
+            
+            // Initialize animations for hero wind particles immediately
+            const heroWindParticles = document.querySelectorAll('.fresh-air .air-particle');
+            heroWindParticles.forEach((particle, index) => {
+                const duration = 10 + Math.random() * 15;
+                const delay = index * 0.8;
+                
+                anime({
+                    targets: particle,
+                    translateX: [
+                        { value: 0, duration: 0 },
+                        { value: window.innerWidth, duration: duration * 1000 }
+                    ],
+                    translateY: [
+                        { value: 0, duration: 0 },
+                        { value: -20 + Math.random() * 40, duration: duration * 1000 }
+                    ],
+                    opacity: [0.2, 0.7, 0.2],
+                    easing: 'easeInOutSine',
+                    delay: delay * 1000,
+                    loop: true
+                });
+            });
+            
+            document.querySelectorAll('.fresh-air .air-stream').forEach((stream, index) => {
+                anime({
+                    targets: stream,
+                    opacity: [0, 0.3, 0],
+                    translateX: [0, window.innerWidth * 0.3],
+                    translateY: [-5, 5],
+                    duration: 15000,
+                    delay: index * 2000,
+                    easing: 'easeInOutSine',
+                    loop: true
+                });
+            });
+        });
+    </script>
 </body>
 </html>
